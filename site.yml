@@ -26,6 +26,10 @@
       stat: path=/var/www/site/sites/{{ site_name }}/files
       register: project_files
 
+    - name: Check if default.settings.php file exists
+      stat: path=/var/www/site/sites/default/default.settings.php
+      register: default_settings
+
     - name: Copy modified xdebug ini into main extension config folder.
       template:
         src: provisioning/templates/xdebug.ini.j2
@@ -53,6 +57,7 @@
 
     - name: Copy default.settings.php to settings.php
       copy: src=site/sites/default/default.settings.php dest=/var/www/site/sites/{{ site_name }}/settings.php force=no
+      when: default_settings.stat.exists
 
     - name: Add db_url configuration
       lineinfile: dest=/var/www/site/sites/{{ site_name }}/settings.php regexp="^\$db_url =" line="$db_url = 'mysql://root:{{ mysql_root_password }}@localhost/site';"
