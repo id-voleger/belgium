@@ -1,0 +1,66 @@
+---
+- hosts: all
+  remote_user: root
+  become: yes
+  vars_files:
+    - config.yml
+  roles:
+    - geerlingguy.firewall
+    - geerlingguy.apache
+    - geerlingguy.git
+    - geerlingguy.mysql
+    - geerlingguy.php
+    - geerlingguy.php-pecl
+    - geerlingguy.php-mysql
+    - geerlingguy.php-xdebug
+    - geerlingguy.drush
+    - geerlingguy.java
+    - geerlingguy.solr
+
+  tasks:
+    - name: Check if default/files folder exists
+      stat: path=/var/www/site/sites/default/files
+      register: default_files
+
+    - name: Check if project/files folder exists
+      stat: path=/var/www/site/sites/{{ site_name }}/files
+      register: project_files
+
+    - name: Copy modified xdebug ini into main extension config folder.
+      template:
+        src: provisioning/templates/xdebug.ini.j2
+        dest: "{{ php_extension_conf_path }}/xdebug.ini"
+        owner: root
+        group: root
+        mode: 0644
+      notify:
+        - restart apache
+
+    - name: Install some useful packages
+      apt:
+        name: "{{ item }}"
+        state: installed
+      with_items:
+        - tig
+        - mc
+        - unzip
+
+    - name: Copy database dump to /tmp folder
+      copy: src=db/{{ site_dump }} dest=/tmp
+
+    - name: Import database dump
+      mysql_db: name=site state=import target=/tmp/{{ site_dump }}
+
+    - name: Copy default.settings.php to settings.php
+      copy: src=site/sites/default/default.settings.php dest=/var/www/site/sites/{{ site_name }}/settings.php force=no
+
+    - name: Add db_url configuration
+      lineinfile: dest=/var/www/site/sites/{{ site_name }}/settings.php regexp="^\$db_url =" line="$db_url = 'mysql://root:{{ mysql_root_password }}@localhost/site';"
+
+    - name: Ensure that default files folder permission is 777
+      command: find /var/www/site/sites/default/files -type d -exec chmod -R 777 {} \;
+      when: default_files.stat.exists and default_files.stat.isdir
+
+    - name: Ensure that project files folder permission is 777
+      command: find /var/www/site/sites/{{ site_name }}/files -type d -exec chmod -R 777 {} \;
+      when: project_files.stat.exists and project_files.stat.isdir

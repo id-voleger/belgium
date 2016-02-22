@@ -1,0 +1,11 @@
+geerlingguy.firewall
+geerlingguy.apache
+geerlingguy.git
+geerlingguy.mysql
+geerlingguy.php
+geerlingguy.php-pecl
+geerlingguy.php-mysql
+geerlingguy.php-xdebug
+geerlingguy.drush
+geerlingguy.java
+geerlingguy.solr

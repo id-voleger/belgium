@@ -1,0 +1,88 @@
+# ----------------------------------------
+# ------------ Site configs --------------
+# ----------------------------------------
+
+# Replace this with domain name
+site_name: SITE_NAME
+
+# Replace this with filename of database dump located in "db/" folderD
+site_dump: DUMP_FILE
+
+# ----------------------------------------
+# ----------- System configs -------------
+# ----------------------------------------
+
+# Ubuntu configs
+firewall_allowed_tcp_ports:
+  - "22"
+  - "25"
+  - "80"
+  - "81"
+  - "443"
+  - "4444"
+  - "8025"
+  - "8080"
+  - "8443"
+  - "8983"
+
+# Git install configs
+git_install_from_source: true
+
+# Apache configs
+apache_listen_port: 80
+apache_vhosts:
+  - servername: "{{ site_name }}"
+    documentroot: "/var/www/site"
+
+# PHP configs
+php_memory_limit: "384M"
+php_display_errors: "On"
+php_display_startup_errors: "On"
+php_realpath_cache_size: "1024K"
+php_sendmail_path: "/usr/sbin/ssmtp -t"
+php_max_input_vars: "4000"
+php_enable_php_fpm: false
+php_enable_apc: false
+php_opcache_enable: "0"
+php_webserver_daemon: "apache2"
+php_packages:
+  - php5
+  - php5-mysql
+  - php5-cli
+  - php5-common
+  - php5-curl
+  - php5-dev
+  - php5-gd
+  - php-pear
+
+# XDebug configs
+php_xdebug_coverage_enable: 1
+php_xdebug_default_enable: 1
+php_xdebug_cli_enable: 1
+
+php_xdebug_module_path: "/usr/lib/php5/20090626"
+php_xdebug_remote_enable: "true"
+php_xdebug_remote_connect_back: "true"
+php_xdebug_remote_host: 192.168.33.20
+php_xdebug_remote_port: "9000"
+php_xdebug_remote_log: /tmp/xdebug.log
+php_xdebug_remote_autostart: "true"
+
+# MySQL configs
+mysql_root_password: pass
+mysql_slow_query_log_enabled: true
+mysql_slow_query_time: 2
+mysql_wait_timeout: 300
+
+mysql_databases:
+  - name: site
+    collation: utf8_general_ci
+    encoding: utf8
+    replicate: 1
+
+# Drush configs
+drush_version: "5.11.0"
+
+# Java configs
+java_packages:
+  - openjdk-6-jdk
