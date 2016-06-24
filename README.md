@@ -1,10 +1,10 @@
 # Drupal 6 site VM
 
 ### Steps to start
-* Install the latest versions of Vagrant, VirtualBox and Ansible.
+* Install the latest versions of Vagrant [v.1.8.1], VirtualBox [v.5.0.22] and Ansible [v.2.1.0.0].
 * Fork this repository or just copy its files.
 * Get latest Ansible roles form the cloud with command:
-  **sudo ansible-galaxy install -r requirements.txt --force**
+  **sudo ansible-galaxy install -r requirements.yml --force**
 * Create **db/** and **site/** folders.
 * Copy site's files into **site/** folder and database dump into **db/** folder.
 * Open **config.yml**.

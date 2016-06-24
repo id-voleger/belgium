@@ -33,10 +33,11 @@
     - name: Copy modified xdebug ini into main extension config folder.
       template:
         src: provisioning/templates/xdebug.ini.j2
-        dest: "{{ php_extension_conf_path }}/xdebug.ini"
+        dest: "{{ item }}/xdebug.ini"
         owner: root
         group: root
         mode: 0644
+      with_items: "{{ php_extension_conf_paths }}"
       notify:
         - restart apache
 
