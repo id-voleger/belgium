@@ -12,6 +12,8 @@ Vagrant.configure(2) do |config|
     vb.memory = "2048"
   end
 
+  config.vm.provision :shell, inline: "sed -i 's/security.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list"
+  config.vm.provision :shell, inline: "sed -i 's/us.archive.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list"
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "site.yml"
   end
