@@ -30,17 +30,6 @@
       stat: path=/var/www/site/sites/default/default.settings.php
       register: default_settings
 
-    - name: Copy modified xdebug ini into main extension config folder.
-      template:
-        src: provisioning/templates/xdebug.ini.j2
-        dest: "{{ item }}/xdebug.ini"
-        owner: root
-        group: root
-        mode: 0644
-      with_items: "{{ php_extension_conf_paths }}"
-      notify:
-        - restart apache
-
     - name: Install some useful packages
       apt:
         name: "{{ item }}"

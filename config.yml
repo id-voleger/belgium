@@ -79,6 +79,7 @@ php_xdebug_remote_host: 192.168.33.20
 php_xdebug_remote_port: "9000"
 php_xdebug_remote_log: /tmp/xdebug.log
 php_xdebug_remote_autostart: "true"
+php_xdebug_idekey: sublime.xdebug
 
 # MySQL configs
 mysql_root_password: pass
