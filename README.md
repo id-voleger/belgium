@@ -7,6 +7,7 @@
   **sudo ansible-galaxy install -r requirements.yml --force**
 * Create **db/** and **site/** folders.
 * Copy site's files into **site/** folder and database dump into **db/** folder.
+* Run **cp default.config.yml config.yml**.
 * Open **config.yml**.
 * Change **SITE_NAME** to the domain name of your site.
 * Change **DUMP_FILE** to the filename of your dump.

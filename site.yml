@@ -4,6 +4,7 @@
   become: yes
   vars_files:
     - config.yml
+    - vars.yml
   roles:
     - geerlingguy.firewall
     - geerlingguy.apache

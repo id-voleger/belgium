@@ -3,10 +3,10 @@
 # ----------------------------------------
 
 # Replace this with domain name
-site_name: 5052.fedimbo.belgium.be
+site_name: SITE_NAME
 
 # Replace this with filename of database dump located in "db/" folderD
-site_dump: 5052fedimbobel_0.sql
+site_dump: DUMP_FILE
 
 # ----------------------------------------
 # ----------- System configs -------------

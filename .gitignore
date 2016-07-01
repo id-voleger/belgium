@@ -1,3 +1,4 @@
 .vagrant
 db
 site
+config.yml

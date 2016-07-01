@@ -1,0 +1,90 @@
+vhost_docroot: "/var/www/site"
+
+# Ubuntu configs
+firewall_allowed_tcp_ports:
+  - "22"
+  - "25"
+  - "80"
+  - "81"
+  - "443"
+  - "4444"
+  - "8025"
+  - "8080"
+  - "8443"
+  - "8983"
+
+# Git install configs
+git_install_from_source: true
+
+# Apache configs
+apache_listen_port: 80
+apache_listen_port_ssl: 443
+apache_ssl_cipher_suite: "ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES256-SHA:ECDHE-ECDSA-DES-CBC3-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:DES-CBC3-SHA:!DSS"
+apache_vhosts:
+  - servername: "{{ site_name }}"
+    documentroot: "{{ vhost_docroot }}"
+    extra_parameters: "Redirect permanent / https://{{ site_name }}/"
+apache_vhosts_ssl:
+  - servername: "{{ site_name }}"
+    documentroot: "{{ vhost_docroot }}"
+    certificate_file: "/vagrant/provisioning/ssl/localhost.cert"
+    certificate_key_file: "/vagrant/provisioning/ssl/localhost.key"
+    extra_parameters: "SetEnvIf User-Agent \".*MSIE.*\" nokeepalive ssl-unclean-shutdown"
+
+# PHP configs
+php_memory_limit: "384M"
+php_display_errors: "On"
+php_display_startup_errors: "On"
+php_realpath_cache_size: "1024K"
+php_sendmail_path: "/usr/sbin/ssmtp -t"
+php_max_input_vars: "4000"
+php_enable_php_fpm: false
+php_enable_apc: false
+php_opcache_enable: "0"
+php_webserver_daemon: "apache2"
+php_packages:
+  - php5
+  - php5-mysql
+  - php5-cli
+  - php5-common
+  - php5-curl
+  - php5-dev
+  - php5-gd
+  - php-pear
+
+# XDebug configs
+php_xdebug_coverage_enable: 1
+php_xdebug_default_enable: 1
+php_xdebug_cli_enable: 1
+
+php_xdebug_version: 2.2.7
+php_xdebug_module_path: "/usr/lib/php5/20090626"
+php_xdebug_remote_enable: "true"
+php_xdebug_remote_connect_back: "true"
+php_xdebug_remote_host: 192.168.33.20
+php_xdebug_remote_port: "9000"
+php_xdebug_remote_log: /tmp/xdebug.log
+php_xdebug_remote_autostart: "true"
+php_xdebug_idekey: sublime.xdebug
+
+# MySQL configs
+mysql_root_password: pass
+mysql_slow_query_log_enabled: true
+mysql_slow_query_time: 2
+mysql_wait_timeout: 300
+
+mysql_databases:
+  - name: site
+    collation: utf8_general_ci
+    encoding: utf8
+    replicate: 1
+
+# Drush configs
+drush_version: "5.11.0"
+
+# Java configs
+java_packages:
+  - openjdk-6-jdk
+
+# Solr configs
+solr_version: "3.6.2"
